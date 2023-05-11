@@ -1,0 +1,29 @@
+// 以iphone6 750px为基准，1rem = 100px  如果是640px稿件应该设置字体大小为 640/10 = 64px
+
+body {
+    min-width: 320px;
+    max-width: 750px;
+    margin: 0 auto;
+    width: 10rem;
+    line-height: 1.5;
+    background-color: #f2f2f2;
+}
+
+
+@media screen and (min-width: 750px) {
+    html {
+        font-size: 75px !important;
+    }
+}
+
+#root {
+    .header {
+        position: fixed;
+        top: 0px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 10rem;
+        height: 1.1733rem;
+        background-color: #ffc001;
+    }
+}
