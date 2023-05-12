@@ -144,12 +144,12 @@ html {
             background-color: #fff;
 
             // less mixin
-            .custom-item(){
+            .custom-item() {
                 margin-top: @gasp;
                 padding-bottom: @gasp;
                 border-bottom: 1px dashed #ccc;
             }
-            
+
 
             .custom-label {
                 font-size: @font-size;
@@ -186,17 +186,19 @@ html {
 
             }
 
-            .custom-select{
+            .custom-select {
                 .custom-item()
             }
-            .custom-quetion{
+
+            .custom-quetion {
                 display: flex;
                 justify-content: space-between;
                 .custom-item()
             }
 
-            .custom-same-question{
+            .custom-same-question {
                 .custom-item();
+
                 .van-radio-group {
                     margin-top: @gasp;
                     display: flex;
@@ -204,35 +206,83 @@ html {
                 }
             }
 
-            .custom-lib-question{
+            .custom-lib-question {
                 .custom-item();
+
                 .van-cell {
                     margin-top: @gasp;
                     padding: 0px !important;
                 }
-                .van-field__control{
-                     border: 1px solid #ccc;
+
+                .van-field__control {
+                    border: 1px solid #ccc;
                 }
+
                 .van-radio-group {
                     margin-top: @gasp;
                     display: flex;
                     justify-content: flex-end;
                 }
-                .van-uploader{
+
+                .van-uploader {
                     margin-top: @gasp;
                 }
             }
 
-            .custom-lib-question.answer{
+            .custom-lib-question.answer {
                 .van-radio-group {
                     margin-top: @gasp;
                     display: flex;
-                    justify-content:flex-start;
+                    justify-content: flex-start;
                 }
             }
 
         }
+
+
+        .medicine_info {
+            font-size: @font-size;
+            padding: @padding;
+            background-color: #fff;
+            margin-top: @head-height;
+
+
+            .custom-item-fn() {
+                margin-top: @gasp;
+                padding-bottom: @gasp;
+                border-bottom: 1px dashed #ccc;
+            }
+
+            .custom-item {
+                .custom-label {
+                    font-size: @font-size;
+                    background-color: #fff;
+                    color: #646566;
+                }
+
+                .van-radio-group {
+                    margin-top: @gasp;
+                    display: flex;
+                    justify-content: flex-end;
+                }
+                .custom-item-fn();
+                .van-cell {
+                    margin-top: @gasp;
+                    padding: 0px !important;
+                }
+                .van-field__control {
+                    border: 1px solid #ccc;
+                }
+                .van-uploader {
+                    margin-top: @gasp;
+                }
+                .fbt{
+                    font-size: .2667rem;
+                    font-weight: normal;
+                }
+            }
+
+        }
+
     }
-
-
 }

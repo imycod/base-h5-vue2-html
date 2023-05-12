@@ -392,6 +392,8 @@ const Adverse = {
     methods: {
         onSubmit() {
             console.log(this.form)
+
+            this.$router.push('/medicineinfo')
         },
         afterRead(file) {
             // 此时可以自行将文件上传至服务器
@@ -401,6 +403,107 @@ const Adverse = {
             console.log(file)
         }
     },
+}
+
+
+const MedicineInfo = {
+    template:`#medicineinfo`,
+    components: {
+        'custom-selectate-component': selectDateComponent,
+    },
+    data(){
+        return{
+            form:{
+                pingu:'',
+                durge_name:'',
+                durgeFileList:[],
+                facompy_name:'',
+                facompyFileList:[],
+                durgeDate:{
+                    year:"",
+                    month:"",
+                    day:"",
+                },
+                dugDateFileList:[],
+                dugId:'',
+                dugIdFileList:[],
+                approvalId:'',
+                approvalIdFileList:[],
+                usevey:'',
+                frequency:'',
+                howtuse:'',
+                durgeDate1:{
+                    year:"",
+                    month:"",
+                    day:"",
+                },
+                durgeDate2:{
+                    year:"",
+                    month:"",
+                    day:"",
+                },
+                durgeDate3:{
+                    year:"",
+                    month:"",
+                    day:"",
+                },
+                durgeDate4:{
+                    year:"",
+                    month:"",
+                    day:"",
+                },
+                what:'',
+                zhengzhuangjq:'',
+                problemagain:'',
+                record:'',
+                recordFileList:[],
+                report:'',
+                supplement:'',
+                supFileList:[],  
+            },
+            view:{
+                form:[
+                    {
+                        // 第一次用药日期
+                        prop:"durgeDate1",
+                        title:'10、第一次使用药的日期',
+                        label:'使用日期: ',
+                    },
+                    {
+                        // 停止使用药品的日期
+                        prop:"durgeDate2",
+                        title:'11、停止使用药品的日期',
+                        label:'停止日期: ',
+                    },
+                    {
+                        // 减少药品使用剂量的日期
+                        prop:"durgeDate3",
+                        title:'12、减少药品使用剂量的日期',
+                        label:'减少日期: ',
+                    },
+                    {
+                        // 持续使用该药品的大概事件
+                        prop:"durgeDate4",
+                        title:'13、持续使用该药品的大概事件',
+                        label:'持续使用: ',
+                    },
+                    
+                ]
+            }
+        }
+    },
+    methods:{
+        afterRead(file){},
+        afterRead1(file){},
+        afterRead2(file){},
+        afterRead3(file){},
+        afterRead4(file){},
+        afterRead5(file){},
+        afterRead6(file){},
+        onSubmit(){
+            alert('todo...')
+        },
+    }
 }
 
 //  vue router
@@ -419,6 +522,11 @@ const routes = [
         path: '/adverse',
         component: Adverse,
         name: 'adverse'
+    },
+    {
+        path: '/medicineinfo',
+        component: MedicineInfo,
+        name: 'medicineinfo'
     },
 ]
 const router = new VueRouter({

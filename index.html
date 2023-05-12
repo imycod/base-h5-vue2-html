@@ -222,6 +222,123 @@
         </div>
     </script>
 
+  <!-- template medicine -->
+  <script type="text/template" id="medicineinfo">
+    <div class='wrapper'>
+      <div class="header">药品信息</div>
+      <div class="medicine_info">
+          <van-form @submit="onSubmit">
+              <div class="custom-item">
+                <span class="custom-label bold">1、以前或家族中是否有发生过同样的问题?</span>
+                <van-radio-group v-model="form.pingu" direction="horizontal">
+                  <van-radio name="1">有</van-radio>
+                  <van-radio name="2">没有</van-radio>
+                </van-radio-group>
+            </div> 
+    
+              <div class="custom-item">
+                <span class="custom-label bold">2、药品名称?<span class="fbt">（包括你看到包装上的所有名称）</span></span>
+                <van-field v-model="form.durge_name" placeholder="请输入" />
+                <van-uploader v-model="form.durgeFileList" multiple :after-read="afterRead" />
+              </div> 
+    
+    
+              <div class="custom-item">
+                <span class="custom-label bold">3、药品的生产厂家名称</span>
+                <van-field v-model="form.facompy_name" placeholder="请输入" />
+                <van-uploader v-model="form.facompyFileList" multiple :after-read="afterRead1" />
+              </div> 
+    
+    
+              <div class="custom-item">
+                <span class="custom-label bold">4、有效期至填写日期</span>
+                <custom-selectate-component label="有效期至" :form="form.durgeDate"/>
+                <van-uploader v-model="form.dugDateFileList" multiple :after-read="afterRead2" />
+              </div> 
+    
+    
+              <div class="custom-item">
+                <span class="custom-label bold">5、药品批号</span>
+                <van-field v-model="form.dugId" placeholder="请输入" />
+                <van-uploader v-model="form.dugIdFileList" multiple :after-read="afterRead3" />
+              </div> 
+    
+              <div class="custom-item">
+                <span class="custom-label bold">6、批准文号</span>
+                <van-field v-model="form.approvalId" placeholder="请输入" />
+                <van-uploader v-model="form.approvalIdFileList" multiple :after-read="afterRead4" />
+              </div> 
+    
+              <div class="custom-item">
+                <span class="custom-label bold">7、每次使用数量<span class="fbt">（例如2粒、2包或1茶匙等）</span> </span>
+                <van-field v-model="form.usevey" placeholder="请输入" />
+              </div> 
+              <div class="custom-item">
+                <span class="custom-label bold">8、频率<span class="fbt">（例如每天2次或睡前1次等）</span> </span>
+                <van-field v-model="form.frequency" placeholder="请输入" />
+              </div> 
+              <div class="custom-item">
+                <span class="custom-label bold">9、如何使用<span class="fbt">（例如口服、注射或涂抹等）</span> </span>
+                <van-field v-model="form.howtuse" placeholder="请输入" />
+              </div> 
+    
+              <div class="custom-item" v-for="sel in view.form" :key='sel.id'>
+                <span class="custom-label bold">{{sel.title}}</span>
+                <custom-selectate-component :label="sel.label" :form="form[sel.prop]"/>
+              </div> 
+    
+    
+              <div class="custom-item">
+                <span class="custom-label bold">14、患者为何要使用此药品<span class="fbt">（例如，它是用来治疗什么疾病或症状的）</span> </span>
+                <van-field v-model="form.what" placeholder="请输入" />
+              </div> 
+    
+    
+              <div class="custom-item">
+                <span class="custom-label bold">15、患者减少或停用该药品后问题减轻或消失了吗？</span>
+                <van-radio-group v-model="form.zhengzhuangjq" direction="horizontal">
+                  <van-radio name="1">有</van-radio>
+                  <van-radio name="2">没有</van-radio>
+                </van-radio-group>
+            </div> 
+    
+              <div class="custom-item">
+                <span class="custom-label bold">16、若再次使用该药品，问题是否再次出现了？</span>
+                <van-radio-group v-model="form.problemagain" direction="horizontal">
+                  <van-radio name="1">有</van-radio>
+                  <van-radio name="2">没有</van-radio>
+                  <van-radio name="3">未再次使用</van-radio>
+                </van-radio-group>
+            </div> 
+    
+            <div class="custom-item">
+              <span class="custom-label bold">17、列出所有目前正在使用的药品、保健品和医疗设备等。</span>
+              <van-field v-model="form.record" placeholder="请输入" />
+              <van-uploader v-model="form.recordFileList" multiple :after-read="afterRead5" />
+            </div> 
+    
+            <div class="custom-item">
+              <span class="custom-label bold">18、是否已向该药品生产厂家报告了这个问题？</span>
+              <van-radio-group v-model="form.report" direction="horizontal">
+                <van-radio name="1">是</van-radio>
+                <van-radio name="2">否</van-radio>
+              </van-radio-group>
+            </div> 
+    
+            <div class="custom-item">
+              <span class="custom-label bold">19、其他需要补充的信息：</span>
+              <van-field v-model="form.supplement" placeholder="请输入" />
+              <van-uploader v-model="form.supFileList" multiple :after-read="afterRead6" />
+            </div> 
+
+            <div style="margin: 16px;">
+              <van-button round block type="info" native-type="submit">完成并提交</van-button>
+            </div>
+          </van-form>
+      </div>
+    </div>
+  </script>
+
 
   <script type="text/template" id="select-date">
     <div class="select-date">
