@@ -1,5 +1,4 @@
-//const idCardReg =
-
+let vm = null
 
 const Home = {
     template: "#home",
@@ -16,45 +15,231 @@ const Home = {
     methods: {
         onSubmit(values) {
             const { reporter, username } = values // van-field -> name
-            this.$router.push('/about')
+            this.$router.push('/info')
         },
     },
 }
-const About = {
-    template: "#about",
-    data() {
-        return {
-            // model
-            username: '',
-            sex: '1',
-            birthDate: '', // 出生日期
-            tel:'',
-            // view
-            showPicker: false,
-            pattern:{
-                phone:/^(?:(?:\+|00)86)?1[3-9]\d{9}$/
-            },
-        }
-    },
-    methods: {
-        onSubmit(values) {
-            const { username, sex } = values
-            console.log(values);
+
+const nationColumns = nationsData.map(nation => nation.label)
+const InfoModel = {
+    form: {
+        username: '',
+        sex: '1',
+        birthDate: '', // 出生日期
+        tel: '',
+        nation: '',
+        selectDate:{
+            year:'',
+            month:'',
+            day:''
         },
-        onConfirm(time) {
-            const year= time.getFullYear()
-            const month= time.getMonth() + 1 
-            const date= time.getDate()
-            console.log('year--',year);
-            this.birthDate = `${year}/${month}/${date}`;
-            this.showPicker = false;
-            console.log(this.birthDate);
+    },
+    view: (scope) => {
+        return {
+            model: {
+                picker: false,
+                pickerType: '',
+                birthDate: false,
+                nation: false,
+                nationColumns, // 从后端获取数据
+                minDate: new Date(1950, 01, 01),
+                maxDate: new Date(),
+            },
+            form: [
+                {
+                    prop: 'username',
+                    name: 'username',
+                    label: '患者姓名',
+                    placeholder: '请填写患者姓名',
+                    type: 'text',
+                    rules: [
+                        { required: true, message: '请填写患者姓名' },
+                    ]
+                },
+                {
+                    prop: 'sex',
+                    name: 'sex',
+                    label: '患者性别',
+                    placeholder: '请选择患者性别',
+                    type: 'radio',
+                    direction: 'horizontal',
+                    options: [
+                        {
+                            label: '男',
+                            value: '1'
+                        },
+                        {
+                            label: '女',
+                            value: '2'
+                        }
+                    ]
+                },
+                // {
+                //     prop: 'birthDate',
+                //     name: 'birthDate',
+                //     label: '出生日期',
+                //     placeholder: '请选择出生日期',
+                //     type: 'picker',
+                //     readonly: true,
+                //     clickable: true,
+                //     onClick: (prop) => {
+                //         scope.view.model.pickerType = 'date-picker'
+                //         scope.view.model.picker = true
+                //     },
+                //     rules: [
+                //         { required: true, message: '请选择出生日期' },
+                //     ]
+                // },
+                {
+                    prop: 'birthDate',
+                    name: 'birthDate',
+                    label: '出生日期',
+                    placeholder: '请选择出生日期',
+                    type: 'select',
+                    options:[
+                        {
+                            label: '年',
+                            prop: 'year',
+                            value: new Date().getFullYear(),
+                            step: 100,
+                        },
+                        {
+                            label: '月',
+                            prop: 'month',
+                            value:12,
+                        },
+                        {
+                            label: '日',
+                            prop: 'day',
+                            value: 31,
+                        },
+                    ]
+                },
+                {
+                    prop: 'tel',
+                    name: 'tel',
+                    type: 'tel',
+                    label: '联系电话',
+                    placeholder: '请输入联系电话',
+                    rules: [
+                        { required: true, message: '请输入联系电话' },
+                        {
+                            pattern: /^(?:(?:\+|00)86)?1[3-9]\d{9}$/,
+                            message: '联系电话输入错误,请重新输入'
+                        },
+                    ]
+                },
+                {
+                    prop: 'nation', // 民族
+                    name: 'nation',
+                    type: 'picker',
+                    label: '民族',
+                    placeholder: '请选择民族',
+                    readonly: true,
+                    clickable: true,
+                    rules: [
+                        { required: true, message: '请选择民族' },
+                    ],
+                    onClick: (prop) => {
+                        scope.view.model.pickerType = 'picker'
+                        scope.view.model.picker = true
+                        console.log('scope.view.model-', scope.form)
+                    }
+                },
+                {
+                    // 体重
+                    prop: 'weight',
+                    name: 'weight',
+                    type: 'number',
+                    label: '体重',
+                    placeholder: '请输入体重',
+                    rules: [
+                        { required: true, message: '请输入体重' },
+                    ]
+                },
+                {
+                    // 已知疾病
+                    prop: 'disease',
+                    name: 'disease',
+                    type: 'text',
+                    label: '',
+                    customLabel: '列出已知的疾病状况：',
+                    class: 'custom-label',
+                    placeholder: '（如糖尿病、高血压、癌症、心脏病等）',
+                },
+                {
+                    // 列出所有过敏
+                    prop: 'allergy',
+                    name: 'allergy',
+                    type: 'text',
+                    label: '',
+                    customLabel: '列出所有过敏: ',
+                    class: 'custom-label',
+                    placeholder: '（如药物、食物、花粉或其他）',
+                },
+                {
+                    // 列出所有关于患者其他重要信息：
+                    prop: 'other_info',
+                    name: 'other_info',
+                    type: 'text',
+                    label: '',
+                    customLabel: '列出所有关于患者其他重要信息: ',
+                    class: 'custom-label',
+                    placeholder: '（如抽烟、喝酒、怀孕等）',
+                },
+            ],
         }
     }
 }
+
 const Info = {
-    template: "#info"
+    template: "#info",
+    data() {
+        return {
+            // data model - 数据模型层给到api
+            form: InfoModel.form,
+            // view model - 视图模型层给到视图
+            view: InfoModel.view(this),
+            pattern: InfoModel.pattern,
+        }
+    },
+    methods: {
+        formatter(type, val) {
+            if (type === 'year') {
+                return `${val}年`;
+            } else if (type === 'month') {
+                return `${val}月`;
+            } else {
+                return `${val}日`;
+            }
+        },
+        onSubmit(values) {
+            console.log('values---', values);
+            console.log('this.form--', this.form)
+
+            this.$store.commit('set', { type: 'patientInfo', data: this.form })
+            this.$router.push('/adverse')
+        },
+        onConfirm(value, type, prop) {
+            if (type == 'date-picker') {
+                const year = value.getFullYear()
+                const month = value.getMonth() + 1 < 10 ? `0${value.getMonth() + 1}` : value.getMonth() + 1
+                const date = value.getDate() < 10 ? `0${value.getDate()}` : value.getDate()
+                console.log('year--', year);
+                this.form[prop] = `${year}/${month}/${date}`;
+            } else {
+                this.form[prop] = value
+            }
+
+            this.view.model.picker = false;
+        }
+    }
 }
+const Adverse = {
+    template: "#adverse"
+}
+
+//  vue router
 const routes = [
     {
         path: '/',
@@ -67,23 +252,45 @@ const routes = [
         name: 'info'
     },
     {
-        path: '/about',
-        component: About,
-        name: 'about'
+        path: '/adverse',
+        component: Adverse,
+        name: 'adverse'
     },
 ]
 const router = new VueRouter({
     routes,
     mode: "hash"
 })
+// vuex
+const store = new Vuex.Store({
+    state() {
+        return {
+            // 患者信息
+            patientInfo: {},
+            // 不良事件
+            adverseEvent: {},
+            // 药品信息
+            drugInfo: {},
+        }
+    },
+    mutations: {
+        set(state, payload) {
+            state[payload.type] = payload.data
+        }
+    }
+})
 
-new Vue({
+Vue.use(Vuex)
+
+const app = new Vue({
     router,
+    store,
     el: '#root',
     data() {
         return {
             msg: 'hello'
         }
     },
-
 })
+
+vm = app
