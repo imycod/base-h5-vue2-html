@@ -1,5 +1,45 @@
 let vm = null
 
+
+const selectDateComponent = {
+    template: '#select-date',
+    props: {
+        options: {
+            type: Array,
+            default: () => [
+                {
+                    label: '年',
+                    prop: 'year',
+                    value: new Date().getFullYear(),
+                    step: 100,
+                },
+                {
+                    label: '月',
+                    prop: 'month',
+                    value: 12,
+                },
+                {
+                    label: '日',
+                    prop: 'day',
+                    value: 31,
+                },
+            ]
+        },
+        form: {
+            type: Object,
+            default: () => { }
+        },
+        prop: {
+            type: String,
+            defualt: ''
+        },
+        label: {
+            type: String,
+            default: '填写日期'
+        }
+    }
+}
+
 const Home = {
     template: "#home",
     data() {
@@ -28,10 +68,10 @@ const InfoModel = {
         birthDate: '', // 出生日期
         tel: '',
         nation: '',
-        selectDate:{
-            year:'',
-            month:'',
-            day:''
+        selectDate: {
+            year: '',
+            month: '',
+            day: ''
         },
     },
     view: (scope) => {
@@ -96,7 +136,7 @@ const InfoModel = {
                     label: '出生日期',
                     placeholder: '请选择出生日期',
                     type: 'select',
-                    options:[
+                    options: [
                         {
                             label: '年',
                             prop: 'year',
@@ -106,7 +146,7 @@ const InfoModel = {
                         {
                             label: '月',
                             prop: 'month',
-                            value:12,
+                            value: 12,
                         },
                         {
                             label: '日',
@@ -235,8 +275,132 @@ const Info = {
         }
     }
 }
+
 const Adverse = {
-    template: "#adverse"
+    template: "#adverse",
+    components: {
+        'custom-selectate-component': selectDateComponent,
+    },
+    data() {
+        return {
+            form: {
+                quest: [],
+                quest_text: '',
+                events: [],
+                date: {
+                    year: '',
+                    month: '',
+                    day: ''
+                },
+                first_radio: '1',
+                first_same_radio: '1',
+                quest_lib_text: '',
+                fileList: [
+                    // { url: 'https://img01.yzcdn.cn/vant/leaf.jpg' },
+                    // Uploader 根据文件后缀来判断是否为图片文件
+                    // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
+                    // { url: 'https://cloud-image', isImage: true },
+                ],
+                durge:'',
+                quest_durge_text:'',
+                answer:[],
+                quest_answer_text:'',
+                quest_hap_text:'',
+                fileList1:[],
+            },
+            view: {
+                model: {
+
+                },
+                form: {
+                    question: [
+                        {
+                            id: '0',
+                            label: '1、发生了什么样的问题？（可多选）',
+                            prop: 'quest',
+                            type: 'checkbox',
+                            options: [
+                                {
+                                    text: '受伤或产生了副作用（包括所有新的或恶化的症状）',
+                                    value: '1'
+                                },
+                                {
+                                    text: '未正确使用药品，可能导致或已导致问题',
+                                    value: '2',
+                                },
+                                {
+                                    text: '发现药品有质量问题',
+                                    value: '3',
+                                },
+                                {
+                                    text: '同一药品换厂家后出现问题',
+                                    value: '4',
+                                },
+                                {
+                                    text: '其他（填空）',
+                                    value: '5',
+                                },
+                            ]
+
+                        },
+                        {
+                            id: '1',
+                            label: '2、发生过以下事件吗？（可多选）',
+                            prop: 'events',
+                            type: 'checkbox',
+                            options: [
+                                {
+                                    text: '导致住院或使住院时间延长',
+                                    value: '1'
+                                },
+                                {
+                                    text: '需要进一步治疗以防止永久性伤害',
+                                    value: '2',
+                                },
+                                {
+                                    text: '残疾或其他健康问题',
+                                    value: '3',
+                                },
+                                {
+                                    text: '胎儿出生缺陷',
+                                    value: '4',
+                                },
+                                {
+                                    text: '威胁生命',
+                                    value: '5',
+                                },
+                                {
+                                    text: '死亡',
+                                    value: '6',
+                                },
+                                {
+                                    text: '无',
+                                    value: '7',
+                                },
+                                {
+                                    text: '其他严重不良反应事件（填空）',
+                                    value: '8',
+                                },
+                            ]
+
+                        },
+                    ]
+                }
+            }
+        }
+    },
+    methods: {
+        onSubmit() {
+            console.log(this.form)
+        },
+        afterRead(file) {
+            // 此时可以自行将文件上传至服务器
+            console.log(file);
+        },
+        afterRead1(file){
+            console.log(file)
+        }
+    },
 }
 
 //  vue router

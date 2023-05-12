@@ -23,8 +23,8 @@
   <!-- tempalte home -->
   <script type="text/template" id="home">
         <div class="wrapper">
-            <div class="v-i-top">
-                
+            <div class="v-i-top center">
+                ｌｏｇｏ
             </div>
             <div class="v-i-form">
                 <van-form @submit="onSubmit">
@@ -49,7 +49,7 @@
                     placeholder="请输入患者身份证号"   
                     :rules="[{ required: true,message: '请填写患者身份证号' },{pattern,message:'身份证号输入错误,请重新输入'}]" />
                     <div style="margin: 16px;">
-                    <van-button round block type="info" native-type="submit">开始上报</van-button>
+                    <van-button round block type="info" native-type="submit">下一步</van-button>
                     </div>
                 </van-form>
             </div>
@@ -60,7 +60,7 @@
   <script type="text/template" id="info">
         <div class="wrapper">
             <div class="header">患者信息</div>
-            <div class="v-ii-form">
+            <div class="v-ii-form mt-to-header">
                 <van-form @submit="onSubmit">
                     <div v-for="v in view.form" :key="v.prop">
                       <div v-if="['tel','text','number'].includes(v.type)">
@@ -147,11 +147,101 @@
   <script type="text/template" id="adverse">
         <div class='wrapper'>
           <div class="header">不良事件</div>
-          <div class="v-iii-form">
+          <div class="v-iii-form mt-to-header">
+            <van-form @submit="onSubmit">
 
+              <div class="checkbox-question" v-for="question in view.form.question" :key="question.id">
+                <span class="custom-label bold">{{question.label}}</span>
+                <van-checkbox-group v-model="form[question.prop]">
+                  <van-checkbox shape="square" :name="item.value"  v-for="item in question.options">{{item.text}}</van-checkbox>
+                </van-checkbox-group>
+                <van-field v-model="form.quest_text" placeholder="请输入" />
+              </div>
+
+              <div class="custom-select">
+                <span class="custom-label bold">3. 问题发生日期</span>
+                <custom-selectate-component  :form="form.date"/>
+              </div>
+
+              <div class="custom-quetion">
+                <span class="custom-label bold">4、是否第一次出现此问题？</span>
+                <van-radio-group v-model="form.first_radio" direction="horizontal">
+                  <van-radio name="1">是</van-radio>
+                  <van-radio name="2">否</van-radio>
+                </van-radio-group>
+              </div>
+
+              <div class="custom-same-question">
+                <span class="custom-label bold">5、以前或家族中是否有发生过同样的问题?</span>
+                <van-radio-group v-model="form.first_same_radio" direction="horizontal">
+                  <van-radio name="1">是</van-radio>
+                  <van-radio name="2">否</van-radio>
+                  <van-radio name="3">不详</van-radio>
+                </van-radio-group>
+              </div>
+
+              <div class="custom-lib-question">
+                <span class="custom-label bold">6、发生此问题前后有无相关检查/实验室结果?</span>
+                <van-field v-model="form.quest_lib_text" placeholder="请输入" />
+                <van-uploader v-model="form.fileList" multiple :after-read="afterRead" />
+              </div>
+
+              <div class="custom-lib-question">
+                <span class="custom-label bold">7、发生此问题后有无使用其他药物来缓解或治疗？</span>
+                <van-radio-group v-model="form.durge" direction="horizontal">
+                  <van-radio name="1">是</van-radio>
+                  <van-radio name="2">否</van-radio>
+                </van-radio-group>
+                <van-field v-model="form.quest_durge_text" placeholder="请输入" />
+              </div>
+
+              <div class="custom-lib-question answer">
+                <span class="custom-label bold">8、问题最终的结果是什么？</span>
+                <van-checkbox-group v-model="form.answer" direction="horizontal">
+                  <van-checkbox name="1" shape="square">痊愈</van-checkbox>
+                  <van-checkbox name="2" shape="square">好转</van-checkbox>
+                  <van-checkbox name="3" shape="square">未好转</van-checkbox>
+                  <van-checkbox name="4" shape="square">不详</van-checkbox>
+                  <van-checkbox name="5" shape="square">有后遗症</van-checkbox>
+                  <van-checkbox name="6" shape="square">表现</van-checkbox>
+                </van-radio-group>
+                <van-field v-model="form.quest_answer_text" placeholder="请输入" />
+              </div>
+
+              <div class="custom-lib-question">
+                <span class="custom-label bold">9、告诉我们发生了什么，如何发生或为什么发生。</span>
+                <van-field v-model="form.quest_hap_text" placeholder="请输入" />
+                <van-uploader v-model="form.fileList1" multiple :after-read="afterRead1" />
+              </div>
+
+              <div style="margin: 16px;">
+                <van-button round block type="info" native-type="submit">下一步</van-button>
+              </div>
+            </van-form>
           </div>
         </div>
     </script>
+
+
+  <script type="text/template" id="select-date">
+    <div class="select-date">
+          <span class="label">{{ label }}</span>
+          <div class="select">
+              <span v-for="d in options" class="date">
+                <select v-if="d.prop == 'year'" v-model="form[d.prop]">
+                  <option v-for="i in d.step" :key="i">{{ i+ d.value - d.step}}</option>
+                </select>
+              <select v-if="d.prop!=='year'" v-model="form[d.prop]">
+                <option v-for="(i) in d.value" :key="i">{{ i }}</option>
+              </select>
+              <span class="subffix">
+                {{ d.label }}
+              </span>
+            </span>
+          </div>
+    </div>
+  </script>
+
 
   <script src="./assets/flexible2.js"></script>
   <script src="./assets/moment.min.js"></script>
