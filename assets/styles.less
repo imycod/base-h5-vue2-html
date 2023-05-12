@@ -9,6 +9,11 @@ body {
     background-color: #f2f2f2;
 }
 
+body,
+html {
+    height: 100%;
+}
+
 
 @media screen and (min-width: 750px) {
     html {
@@ -16,14 +21,39 @@ body {
     }
 }
 
+
+
+
 #root {
-    .header {
-        position: fixed;
-        top: 0px;
-        left: 50%;
-        transform: translateX(-50%);
+    height: 100%;
+
+    .wrapper {
         width: 10rem;
-        height: 1.1733rem;
-        background-color: #ffc001;
+        height: 100%;
+
+        .v-i-top {
+            height: 50%;
+        }
+
+        .v-i-form {
+            height: 50%;
+        }
+
+        .header {
+            position: fixed;
+            top: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10rem;
+            height: 1.1733rem;
+            background-color: #ffffff;
+            
+            font-size: .2933rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     }
+
+
 }

@@ -22,16 +22,96 @@
 
     <!-- tempalte home -->
     <script type="text/template" id="home">
-        <div>
-            home
+        <div class="wrapper">
+            <div class="v-i-top">
+                
+            </div>
+            <div class="v-i-form">
+                <van-form @submit="onSubmit">
+                    <van-field
+                    v-model="reporter"
+                    name="reporter" 
+                    label="上报者姓名"
+                    placeholder="上报者姓名"
+                    :rules="[{ required: true, message: '请填写上报者姓名' }]"
+                    />
+                    <van-field
+                        v-model="username"
+                        name="username"
+                        label="患者姓名"
+                        placeholder="患者姓名"
+                        :rules="[{ required: true, message: '请填写患者姓名' }]"
+                    />
+                    <van-field 
+                    v-model="idCard"
+                    name="idCard" 
+                    label="患者身份证号"
+                    placeholder="请输入患者身份证号"   
+                    :rules="[{ required: true,message: '请填写患者身份证号' },{pattern,message:'身份证号输入错误,请重新输入'}]" />
+                    <div style="margin: 16px;">
+                    <van-button round block type="info" native-type="submit">开始上报</van-button>
+                    </div>
+                </van-form>
+            </div>
         </div>
     </script>
 
     <!-- template about -->
     <script type="text/template" id="about">
-        <div>
-            about
-        </div>
+        <div class="wrapper">
+            <div class="header">患者信息</div>
+            <div class="v-ii-form">
+                <van-form @submit="onSubmit">
+                    <van-field
+                      v-model="username"
+                      name="username"
+                      label="患者姓名"
+                      placeholder="患者姓名"
+                      :rules="[{ required: true, message: '请填写患者姓名' }]"
+                    />
+                    <van-field name="sex" label="患者性别">
+                        <template #input>
+                          <van-radio-group v-model="sex" direction="horizontal">
+                            <van-radio name="1">男</van-radio>
+                            <van-radio name="2">女</van-radio>
+                          </van-radio-group>
+                        </template>
+                      </van-field>
+
+                    <van-field
+                      readonly
+                      clickable
+                      name="datetimePicker"
+                      :value="birthDate"
+                      label="出生日期"
+                      placeholder="点击出生日期"
+                      @click="showPicker = true"
+                      :rules="[{ required: true, message: '请选择出生日期' }]"
+                    />
+
+                    <van-field 
+                        v-model="tel" 
+                        type="tel" 
+                        name="tel"
+                        label="联系电话"
+                        :rules="[{ required: true, message: '请输入联系电话' },{ pattern:pattern.phone, message: '联系电话输入错误,请重新输入' }]" 
+                    />
+
+                    <div style="margin: 16px;">
+                      <van-button round block type="info" native-type="submit">提交</van-button>
+                    </div>
+                  </van-form>
+            </div>
+
+
+            <van-popup v-model="showPicker" position="bottom">
+                <van-datetime-picker
+                  type="date"
+                  @confirm="onConfirm"
+                  @cancel="showPicker = false"
+                />
+              </van-popup>
+        </div>  
     </script>
 
     <!-- template info -->
@@ -45,48 +125,7 @@
     <script src="./assets/vue-router.min.js"></script>
     <script src="./assets/vant.min.js"></script>
 
-    <script>
-        const Home = {
-            template: "#home"
-        }
-        const About = {
-            template: "#about"
-        }
-        const Info = {
-            template: "#info"
-        }
-        const routes = [
-            {
-                path: '/',
-                component: Home,
-                name: 'home'
-            },
-            {
-                path: '/info',
-                component: Info,
-                name: 'info'
-            },
-            {
-                path: '/about',
-                component: About,
-                name: 'about'
-            },
-        ]
-        const router = new VueRouter({
-            routes,
-            mode: "hash"
-        })
-
-        new Vue({
-            router,
-            el: '#root',
-            data() {
-                return {
-                    msg: 'hello'
-                }
-            }
-        })
-    </script>
+    <script src="./assets/index.js"></script>
 </body>
 
 </html>
